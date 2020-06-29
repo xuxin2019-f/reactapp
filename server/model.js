@@ -9,7 +9,7 @@ const models = {
   user: {
     user: { type: String, require: true },
     pwd: { type: String, require: true },
-    'type:': { type: String, require: true },
+    type: { type: String, require: true },
     // 头像 通过头像、简介等的存在判断是不是完善个人信息了
     avatar: { type: String },
     // 个人简介或职位简介

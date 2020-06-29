@@ -1,9 +1,13 @@
 import React from 'react'
 import axios from 'axios'
 import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { loadData } from '../../redux/user.redux'
 
+// 注意connect要写在withRouter底下
 export default
 @withRouter
+@connect(null, { loadData })
 class AuthRoute extends React.Component {
   async componentDidMount() {
     // 登录页和注册页不需要获取用户信息，也不需要跳转
@@ -18,6 +22,7 @@ class AuthRoute extends React.Component {
       console.log(res.data)
       if (res.data.code === 0) {
         // 有登录信息
+        this.props.loadData(res.data.data)
       } else {
         // 由于该组件不是一个Route，所以要用到一个插件withRouter来提供路由相关方法
         console.log(this.props.history)

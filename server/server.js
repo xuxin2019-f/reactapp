@@ -2,6 +2,7 @@ const express = require('express')
 const userRouter = require('./user')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
+
 const app = express()
 // 注意这两个的顺序要在路由的use之前，注意中间件顺序
 app.use(cookieParser())

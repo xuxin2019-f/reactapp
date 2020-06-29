@@ -2,6 +2,7 @@ import React from 'react'
 import Logo from '../../component/logo/logo'
 import { connect } from 'react-redux'
 import { register } from '../../redux/user.redux.js'
+import { Redirect } from 'react-router-dom'
 import {
   List,
   InputItem,
@@ -37,10 +38,10 @@ class Register extends React.Component {
     const RadioItem = Radio.RadioItem
     return (
       <div>
+        {this.props.redirectTo ? <Redirect to={this.props.redirectTo} /> : null}
         <Logo />
         <WingBlank>
           {this.props.msg ? <p>{this.props.msg}</p> : null}
-          {this.props.user}
           <List>
             <InputItem onChange={(v) => this.change('user', v)}>
               用户名：
