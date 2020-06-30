@@ -12,11 +12,16 @@ import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom'
 import Login from './container/login/login'
 import Register from './container/register/register'
 import AuthRoute from './component/authRoute/authRoute'
+import BossInfo from './container/bossinfo/bossinfo'
+import GeniusInfo from './container/geniuinfo/geniuinfo'
 
 const store = createStore(reducers, applyMiddleware(thunk))
 
 function Boss() {
   return <h1>BOSS页</h1>
+}
+function Genius() {
+  return <h1>牛人页</h1>
 }
 
 ReactDOM.render(
@@ -24,9 +29,16 @@ ReactDOM.render(
     <BrowserRouter>
       <div>
         <AuthRoute></AuthRoute>
-        <Route path="/boss" component={Boss} />
-        <Route path="/login" component={Login} />
-        <Route path="/register" component={Register} />
+        <Switch>
+          {/* boss注册后完善信息的页面 */}
+          <Route path="/bossinfo" component={BossInfo} />
+          {/* 求职者注册后完善信息的页面 */}
+          <Route path="/geniusinfo" component={GeniusInfo} />
+          <Route path="/boss" component={Boss} />
+          <Route path="/genius" component={Genius} />
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
+        </Switch>
       </div>
     </BrowserRouter>
   </Provider>,

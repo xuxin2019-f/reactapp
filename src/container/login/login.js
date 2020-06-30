@@ -42,7 +42,7 @@ class Login extends React.Component {
               用户名：
             </InputItem>
             <WhiteSpace />
-            <InputItem onChange={(v) => this.change('pwd', v)}>
+            <InputItem onChange={(v) => this.change('pwd', v)} type="password">
               密码：
             </InputItem>
           </List>

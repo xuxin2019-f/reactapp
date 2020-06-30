@@ -28,6 +28,25 @@ Router.get('/info', (req, res) => {
     }
   })
 })
+Router.post('/update', (req, res) => {
+  // 除了登录注册页所有的页面都需要查看发来的请求有没有携带cookie
+  const { userid } = req.cookies
+  if (!userid) {
+    return res.json({ code: 1 })
+  }
+  const body = req.body
+  User.findByIdAndUpdate(userid, body, function (err, doc) {
+    const data = Object.assign(
+      {},
+      {
+        user: doc.user,
+        type: doc.type,
+      },
+      body
+    )
+    return res.json({ code: 0, data })
+  })
+})
 Router.post('/login', (req, res) => {
   const { user, pwd } = req.body
 
