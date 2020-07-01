@@ -14,15 +14,9 @@ import Register from './container/register/register'
 import AuthRoute from './component/authRoute/authRoute'
 import BossInfo from './container/bossinfo/bossinfo'
 import GeniusInfo from './container/geniuinfo/geniuinfo'
+import Dashboard from './component/dashboard/dashboard'
 
 const store = createStore(reducers, applyMiddleware(thunk))
-
-function Boss() {
-  return <h1>BOSS页</h1>
-}
-function Genius() {
-  return <h1>牛人页</h1>
-}
 
 ReactDOM.render(
   <Provider store={store}>
@@ -34,10 +28,9 @@ ReactDOM.render(
           <Route path="/bossinfo" component={BossInfo} />
           {/* 求职者注册后完善信息的页面 */}
           <Route path="/geniusinfo" component={GeniusInfo} />
-          <Route path="/boss" component={Boss} />
-          <Route path="/genius" component={Genius} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
+          <Route component={Dashboard} />
         </Switch>
       </div>
     </BrowserRouter>

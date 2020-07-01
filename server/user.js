@@ -9,8 +9,12 @@ const utils = require('utility')
 const _filter = { pwd: 0 }
 
 Router.get('/list', (req, res) => {
-  User.find({}, (err, doc) => {
-    res.json(doc)
+  // User.find({}, (err, doc) => {
+  //   res.json(doc)
+  // })
+  const { type } = req.query
+  User.find({ type }, (err, doc) => {
+    return res.json({ code: 0, data: doc })
   })
 })
 Router.get('/info', (req, res) => {
