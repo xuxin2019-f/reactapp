@@ -25,7 +25,6 @@ class AuthRoute extends React.Component {
         this.props.loadData(res.data.data)
       } else {
         // 由于该组件不是一个Route，所以要用到一个插件withRouter来提供路由相关方法
-        console.log(this.props.history)
         this.props.history.push('/login')
       }
     }
@@ -35,6 +34,6 @@ class AuthRoute extends React.Component {
     // 查看用户的type，身份是boss还是牛人
   }
   render() {
-    return <div></div>
+    return null
   }
 }

@@ -5,6 +5,7 @@ const ERROR_MSG = 'ERROR_MSG'
 // const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 const AUTH_SUCCESS = 'AUTH_SUCCESS'
 const LOAD_DATA = 'LOAD_DATA'
+const LOGOUT = 'LOGOUT'
 const initState = {
   redirectTo: '',
   isAuth: false,
@@ -26,6 +27,8 @@ export const user = (state = initState, action) => {
       }
     case LOAD_DATA:
       return { ...state, ...action.payload }
+    case LOGOUT:
+      return { ...state, redirectTo: '/login' }
     default:
       return state
   }
@@ -33,7 +36,7 @@ export const user = (state = initState, action) => {
 
 // action creator
 export function errMsg(msg) {
-  return { msg, type: 'ERROR_MSG' }
+  return { msg, type: ERROR_MSG }
 }
 // export function registerSuccess(data) {
 //   return { type: 'AUTH_SUCCESS', payload: data }
@@ -41,12 +44,15 @@ export function errMsg(msg) {
 // export function loginSuccess(data) {
 //   return { type: 'AUTH_SUCCESS', payload: data }
 // }
-function authSuccess(obj) {
+export function authSuccess(obj) {
   const { pwd, ...data } = obj
   return { type: AUTH_SUCCESS, payload: data }
 }
 export function loadData(userinfo) {
-  return { type: 'LOAD_DATA', payload: userinfo }
+  return { type: LOAD_DATA, payload: userinfo }
+}
+export function logoutSubmit() {
+  return { type: LOGOUT }
 }
 
 // 异步请求

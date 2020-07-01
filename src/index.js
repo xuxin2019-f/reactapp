@@ -24,13 +24,12 @@ ReactDOM.render(
       <div>
         <AuthRoute></AuthRoute>
         <Switch>
-          {/* boss注册后完善信息的页面 */}
-          <Route path="/bossinfo" component={BossInfo} />
-          {/* 求职者注册后完善信息的页面 */}
-          <Route path="/geniusinfo" component={GeniusInfo} />
-          <Route path="/login" component={Login} />
-          <Route path="/register" component={Register} />
-          <Route component={Dashboard} />
+          <Route path="/bossinfo" component={BossInfo}></Route>
+          <Route path="/geniusinfo" component={GeniusInfo}></Route>
+          {/* <Route path="/" exact component={Login}></Route> */}
+          <Route path="/login" component={Login}></Route>
+          <Route path="/register" component={Register}></Route>
+          <Route component={Dashboard}></Route>
         </Switch>
       </div>
     </BrowserRouter>
@@ -41,4 +40,3 @@ ReactDOM.render(
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister()

@@ -3,15 +3,12 @@ import { connect } from 'react-redux'
 import { NavBar } from 'antd-mobile'
 import { Switch, Route } from 'react-router-dom'
 import NavLinkBar from '../navlink/navlink'
-import Boss from '../boss/boss'
-function Genius() {
-  return <div>Genius</div>
-}
+import Boss from '../../component/boss/boss'
+import Genius from '../../component/genius/genius'
+import User from '../../component/user/user'
+
 function Msg() {
-  return <div>Msg</div>
-}
-function User() {
-  return <div>User</div>
+  return <h2>消息列表页面</h2>
 }
 
 @connect((state) => state)
@@ -26,7 +23,6 @@ class Dashboard extends React.Component {
         icon: 'boss',
         title: '牛人列表',
         component: Boss,
-        // 如果当前用户是牛人，则隐藏牛人列表，显示职位招聘的boss页
         hide: user.type === 'genius',
       },
       {
@@ -35,7 +31,6 @@ class Dashboard extends React.Component {
         icon: 'job',
         title: 'BOSS列表',
         component: Genius,
-        // 如果当前用户是boss，则隐藏boss列表，显示求职人列表
         hide: user.type === 'boss',
       },
       {
@@ -53,12 +48,12 @@ class Dashboard extends React.Component {
         component: User,
       },
     ]
+
     return (
       <div>
         <NavBar className="fixd-header" mode="dard">
           {navList.find((v) => v.path === pathname).title}
         </NavBar>
-
         <div style={{ marginTop: 45 }}>
           <Switch>
             {navList.map((v) => (
