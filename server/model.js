@@ -20,7 +20,16 @@ const models = {
     money: { type: String },
   },
   // 聊天
-  chat: {},
+  chat: {
+    // 你发给我和我发给你是一个聊天记录，所以有个chatid
+    chatid: { type: String, require: true },
+    from: { type: String, require: true },
+    to: { type: String, require: true },
+    // 是否已读
+    read: { type: Boolean, default: false },
+    content: { type: String, require: true, default: '' },
+    create_time: { type: Number, default: new Date().getTime() },
+  },
 }
 
 // 批量动态生成
