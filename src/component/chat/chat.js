@@ -1,9 +1,10 @@
 import React from 'react'
 // import io from 'socket.io-client'
-import { List, InputItem, NavBar } from 'antd-mobile'
+import { List, InputItem, NavBar, Icon } from 'antd-mobile'
 // const socket = io('ws://localhost:9093')
 import { connect } from 'react-redux'
 import { getMsgList, sendMsg, recvMsg } from '../../redux/chat.redux'
+import { getChatId } from '../../util'
 
 @connect((state) => state, { getMsgList, sendMsg, recvMsg })
 class Chat extends React.Component {
@@ -28,33 +29,45 @@ class Chat extends React.Component {
     })
   }
   componentDidMount() {
-    this.props.getMsgList()
-    this.props.recvMsg()
-    // socket.on('recvMsg', (data) => {
-    //   this.setState({
-    //     msg: [...this.state.msg, data.text],
-    //   })
-    //   console.log(this.state.msg)
-    // })
+    if (!this.props.chat.chatmsg.length) {
+      this.props.getMsgList()
+      this.props.recvMsg()
+    }
   }
   render() {
-    console.log(this.props)
+    console.log('users', this.props.chat.users)
+    const userid = this.props.match.params.user
     const user = this.props.match.params.user
     const Item = List.Item
+    const users = this.props.chat.users
+    if (!users[userid]) {
+      return null
+    }
+    // 引入util里的共用方法
+    const chatid = getChatId(userid, this.props.user._id)
+    // 过滤，只显示符合唯一chatid的
+    const chatmsgs = this.props.chat.chatmsg.filter((v) => v.chatid === chatid)
     return (
       <div id="chat-page">
-        <NavBar mode="dark">{this.props.match.params.user}</NavBar>
-        {/* <h2>{`chat with: ${this.props.match.params.user}`}</h2> */}
-
+        <NavBar
+          mode="dark"
+          icon={<Icon type="left" />}
+          onLeftClick={() => {
+            this.props.history.goBack()
+          }}
+        >
+          {users[userid].name}
+        </NavBar>
         {/* 分你和我来左右显示 */}
-        {this.props.chat.chatmsg.map((v) => {
+        {chatmsgs.map((v) => {
+          const avatar = require(`../img/${users[v.from].avatar}.png`)
           return v.from === user ? (
             <List key={v._id}>
-              <Item thumb={''}>{v.content}</Item>
+              <Item thumb={avatar}>{v.content}</Item>
             </List>
           ) : (
             <List key={v._id}>
-              <Item extra={'avatar'} className="chat-me">
+              <Item extra={<img src={avatar} alt="" />} className="chat-me">
                 {v.content}
               </Item>
             </List>
