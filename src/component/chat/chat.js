@@ -1,6 +1,6 @@
 import React from 'react'
 // import io from 'socket.io-client'
-import { List, InputItem, NavBar, Icon } from 'antd-mobile'
+import { List, InputItem, NavBar, Icon, Grid } from 'antd-mobile'
 // const socket = io('ws://localhost:9093')
 import { connect } from 'react-redux'
 import { getMsgList, sendMsg, recvMsg } from '../../redux/chat.redux'
@@ -13,6 +13,7 @@ class Chat extends React.Component {
     this.state = {
       text: '',
       msg: [],
+      showEmoji: false,
     }
   }
   sendMsg() {
@@ -34,7 +35,17 @@ class Chat extends React.Component {
       this.props.recvMsg()
     }
   }
+  // 修复antd中宫格的bug
+  fixCarousel() {
+    setTimeout(function () {
+      window.dispatchEvent(new Event('resize'))
+    })
+  }
   render() {
+    const emoji = '😀 😃 😄 😁 😆 😅 😂 😊 😇 🙂 🙃 😉 😌 😍 😘 😗 😙 😚 😋 😜 😝 😛 🤑 🤗 🤓 😎 😏 😒 😞 😔 😟 😕 🙁 😣 😖 😫 😩 😤 😠 😡 😶 😐 😑 😯 😦 😧 😮 😲 😵 😳 😱 😨 😰 😢 😥 😭 😓 😪 😴 🙄 🤔 😬 🤐 😷 🤒 🤕 😈 👿 👹 👺 💩 👻 💀 ☠️ 👽 👾 🤖 🎃 😺 😸 😹 😻 😼 😽 🙀 😿 😾 👐 🙌 👏 🙏 👍 👎 👊 ✊ 🤘 👌 👈 👉 👆 👇 ✋  🖐 🖖 👋  💪 🖕 ✍️  💅 🖖 💄 💋 👄 👅 👂 👃 👁 👀 '
+      .split(' ')
+      .filter((v) => v)
+      .map((v) => ({ text: v }))
     console.log('users', this.props.chat.users)
     const userid = this.props.match.params.user
     const user = this.props.match.params.user
@@ -82,8 +93,36 @@ class Chat extends React.Component {
                 this.setState({ text: v })
               }}
               value={this.state.text}
-              extra={<div onClick={() => this.sendMsg()}>发送</div>}
+              extra={
+                <div>
+                  <span
+                    style={{ marginRight: 15 }}
+                    onClick={() => {
+                      this.setState({
+                        showEmoji: !this.state.showEmoji,
+                      })
+                      this.fixCarousel()
+                    }}
+                  >
+                    😃
+                  </span>
+                  <span onClick={() => this.sendMsg()}>发送</span>
+                </div>
+              }
             ></InputItem>
+            {this.state.showEmoji ? (
+              <Grid
+                data={emoji}
+                columnNum={9}
+                carouselMaxRow={4}
+                isCarousel={true}
+                onClick={(el) =>
+                  this.setState({
+                    text: this.state.text + el.text,
+                  })
+                }
+              />
+            ) : null}
           </List>
         </div>
       </div>
