@@ -3,10 +3,10 @@ import React from 'react'
 import { List, InputItem, NavBar, Icon, Grid } from 'antd-mobile'
 // const socket = io('ws://localhost:9093')
 import { connect } from 'react-redux'
-import { getMsgList, sendMsg, recvMsg } from '../../redux/chat.redux'
+import { getMsgList, sendMsg, recvMsg, readMsg } from '../../redux/chat.redux'
 import { getChatId } from '../../util'
 
-@connect((state) => state, { getMsgList, sendMsg, recvMsg })
+@connect((state) => state, { getMsgList, sendMsg, recvMsg, readMsg })
 class Chat extends React.Component {
   constructor(props) {
     super(props)
@@ -34,6 +34,11 @@ class Chat extends React.Component {
       this.props.getMsgList()
       this.props.recvMsg()
     }
+  }
+  componentWillMount() {
+    // 让后端把当前聊天页与我聊天的这个人发给我的信息的read表示为true已读
+    const to = this.props.match.params.user
+    this.props.readMsg(to)
   }
   // 修复antd中宫格的bug
   fixCarousel() {

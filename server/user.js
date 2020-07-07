@@ -46,6 +46,22 @@ Router.post('/update', function (req, res) {
     return res.json({ code: 0, data })
   })
 })
+Router.post('/readmsg', function (req, res) {
+  const userid = req.cookies.userid
+  const { from } = req.body
+  // update默认只更新找到的第一条，为了全局更新，增加第三个参数
+  Chat.update(
+    { from, to: userid },
+    { $set: { read: true } },
+    { multi: true },
+    function (err, doc) {
+      if (!err) {
+        // 前端需要知道后端更改了几条数据
+        return res.json({ code: 0, num: doc.nModified })
+      }
+    }
+  )
+})
 Router.post('/login', function (req, res) {
   const { user, pwd } = req.body
   User.findOne({ user, pwd: md5Pwd(pwd) }, _filter, function (err, doc) {

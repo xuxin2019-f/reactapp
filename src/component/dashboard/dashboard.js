@@ -8,6 +8,7 @@ import Genius from '../../component/genius/genius'
 import User from '../../component/user/user'
 import Msg from '../../component/msg/msg'
 import { getMsgList, sendMsg, recvMsg } from '../../redux/chat.redux'
+import { Redirect } from 'react-router-dom'
 
 @connect((state) => state, { getMsgList, sendMsg, recvMsg })
 class Dashboard extends React.Component {
@@ -53,7 +54,7 @@ class Dashboard extends React.Component {
       },
     ]
 
-    return (
+    return this.props.user._id ? (
       <div>
         <NavBar className="fixd-header" mode="dard">
           {navList.find((v) => v.path === pathname).title}
@@ -68,6 +69,8 @@ class Dashboard extends React.Component {
 
         <NavLinkBar data={navList}></NavLinkBar>
       </div>
+    ) : (
+      <Redirect to="/login" />
     )
   }
 }
