@@ -36,7 +36,7 @@ class Chat extends React.Component {
       this.props.recvMsg()
     }
   }
-  componentWillMount() {
+  componentWillUnmount() {
     // 让后端把当前聊天页与我聊天的这个人发给我的信息的read表示为true已读
     const to = this.props.match.params.user
     this.props.readMsg(to)
