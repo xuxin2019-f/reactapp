@@ -13,7 +13,7 @@
     "@typescript-eslint/parser": "^2.10.0",
     "antd-mobile": "^2.3.3",
     "asset-require-hook": "^1.2.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "babel-cli": "^6.26.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "10.1.0",
